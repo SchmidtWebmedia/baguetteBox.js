@@ -48,7 +48,9 @@
             afterShow: null,
             afterHide: null,
             onChange: null,
-            overlayBackgroundColor: 'rgba(0,0,0,.8)'
+            overlayBackgroundColor: 'rgba(0,0,0,.8)',
+            customCssClass: null,
+            preventContextMenu: false
         };
     // Object containing information about features compatibility
     var supports = {};
@@ -136,6 +138,11 @@
         }
     };
 
+    var imageElementContextMenuHandler = function(event) {
+        event.preventDefault();
+        return false;
+    };
+
     // forEach polyfill for IE8
     // http://stackoverflow.com/a/14827443/1077846
     /* eslint-disable */
@@ -216,6 +223,7 @@
                     imageElement: imageElement
                 };
                 bind(imageElement, 'click', imageElementClickHandler);
+                bind(imageElement, 'contextmenu', imageElementContextMenuHandler);
                 gallery.push(imageItem);
             });
             selectorData.galleries.push(gallery);
@@ -558,6 +566,9 @@
         image.alt = thumbnailElement ? thumbnailElement.alt || '' : '';
         if (options.titleTag && imageCaption) {
             image.title = imageCaption;
+        }
+        if(options.customCssClass) {
+            image.setAttribute('class', options.customCssClass);
         }
         figure.appendChild(image);
 
