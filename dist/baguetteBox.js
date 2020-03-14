@@ -1,7 +1,7 @@
 /*!
  * baguetteBox.js
  * @author  feimosi
- * @version 1.12.0
+ * @version 1.12.1
  * @url https://github.com/feimosi/baguetteBox.js
  */
 
@@ -223,7 +223,6 @@
                     imageElement: imageElement
                 };
                 bind(imageElement, 'click', imageElementClickHandler);
-                bind(imageElement, 'contextmenu', imageElementContextMenuHandler);
                 gallery.push(imageItem);
             });
             selectorData.galleries.push(gallery);
@@ -569,6 +568,9 @@
         }
         if(options.customCssClass) {
             image.setAttribute('class', options.customCssClass);
+        }
+        if(options.preventContextMenu) {
+            bind(image, 'contextmenu', imageElementContextMenuHandler);
         }
         figure.appendChild(image);
 
